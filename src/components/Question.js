@@ -4,22 +4,29 @@ function Question({ question, onAnswered }) {
   const [timeRemaining, setTimeRemaining] = useState(10);
   let timer = undefined;
   useEffect(() => {
+    // timer for ended time and trigger rerender
     timer = setTimeout(() => {
       setTimeRemaining((timeRemaining) => timeRemaining - 1)
     }, 1000);
-    if(timeRemaining === 0){
-      onAnswered(false)
+
+    if (timeRemaining === 0) {
       setTimeRemaining((timeRemaining) => timeRemaining = 10);
-      clearTimeout(timer)
+      onAnswered(false)
+      // clearTimeout(timer)
     }
 
-  }, [timeRemaining])
+    return function () {
+      clearInterval(timer)
+    }
+    // clearInterval(timer)
+
+  }, [timeRemaining,])
 
   function handleAnswer(isCorrect) {
     setTimeRemaining((timeRemaining) => timeRemaining = 10);
     onAnswered(isCorrect);
   }
-  
+
   const { id, prompt, answers, correctIndex } = question;
 
   return (
