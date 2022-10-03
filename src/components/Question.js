@@ -16,7 +16,7 @@ function Question({ question, onAnswered }) {
     }
 
     return function () {
-      clearInterval(timer)
+      clearTimeout(timer)
     }
     // clearInterval(timer)
 
